@@ -10,6 +10,8 @@ const passport = require('passport');
 const rtsIndex = require('./routes/index.router');
 var memberController = require('./controllers/memberController.js')
 
+const path = require('path');
+
 var app = express();
 
 // middleware
@@ -17,6 +19,12 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(passport.initialize());
 app.use('',rtsIndex);
+
+
+app.use(express.static(path.join(__dirname,'angular-src/dist/Serendipity-MK1')));
+app.get('*',(req,res)=>{
+    res.sendFile(path.join(__dirname,'angular-src/dist/Serendipity-MK1/index.html'))
+})
 
 // error handler
 app.use((err,req,res,next)=>{
